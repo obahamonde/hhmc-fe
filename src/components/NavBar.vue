@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 
+import { useAuth0 } from '@auth0/auth0-vue';
+
+const { state } = useStore();
+
+const { logout } = useAuth0()
+
 interface RouteLink {
   to:string,
   text:string,
@@ -20,12 +26,14 @@ const routes = ref<RouteLink[]>(
     },
     {
       to: '/mcbot',
-      text: 'Lyrics Bot',
+      text: 'ChatbotMC',
       icon: 'mdi-pen'
     }
   ]
 
 )
+
+
 
 
 </script>
@@ -47,23 +55,34 @@ const routes = ref<RouteLink[]>(
     </li>
   </ul>
   <ul class="nav-list">
-    <li class="nav-item">
+    <li class="nav-item" 
+    v-if="state.user"
+    
+    >
       <a href="#">
-        <span class="nav-item__icon avatar">J</span>
+        <span class="nav-item__icon avatar">
+          <img :src="state.user.picture" alt="avatar" class="rf sh cp" />
+        </span>
         <span class="nav-item__text">
-            John Doe
+            {{ state.user.name }}
         </span>
       </a>
     </li>
-    <li class="nav-item">
-      <a href="#">
-        <span class="nav-item__icon logout">
-          <ion-icon name="log-out-outline"></ion-icon>
+    <li class="nav-item "
+      @click="logout()"
+    >
+      <p class="row center gap-4">
+        <span class="nav-item__icon logout ">
+          
+        <Icon icon="mdi-logout" class="x2 text-warning hover:text-error scale cp"
+      
+        />
+
         </span>
         <span class="nav-item__text">
            Logout
         </span>
-      </a>
+      </p>
     </li>
   </ul>
 </div>
@@ -80,10 +99,6 @@ const routes = ref<RouteLink[]>(
 a {
   color: #000;
   text-decoration: none;
-}
-
-body {
-  font-family: "Roboto", sans-serif;
 }
 
 .sidebar {

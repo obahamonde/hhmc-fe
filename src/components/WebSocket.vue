@@ -23,7 +23,6 @@ onUnmounted(() => {
 
 watchEffect(() => {
   if (status.value === "CLOSED"){
-    close();
     open();
   }})
 
