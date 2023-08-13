@@ -26,10 +26,10 @@ const stop = ()=>{
 
 const playNote = ()=>{
     store.playPosition++
-    if (store.playPosition >= sequencerStore.notes.length) {
+    if (store.playPosition >= sequencerStore.melodyLength) {
         store.playPosition = 0
     }
-    const note = sequencerStore.notes[store.playPosition]
+    const note = sequencerStore.getNoteAtPosition(store.playPosition)
     if (note !== 0) {
         props.synth.triggerAttackRelease(midiNoteToString(note), "8n");
     }

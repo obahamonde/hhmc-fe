@@ -22,32 +22,38 @@ export const useSequencerStore = defineStore('sequencerStore', {
 	state: () => ({
 		melodyLength: 64,
 		melody: [] as number[],
-		lowestNote: 21,     // C4
-		highestNote: 108,    // B5
+		lowestNote: 0,
+		highestNote: 127,
 		notes: [] as number[],
 		currentPosition: 0,
 	}),
 	getters: {
 		getNoteAtPosition: (state: SequencerState) => (position: number) => state.melody[position],
-		getMelodyNotes: (state: SequencerState): number => state.melody.filter(note => note != 0).length,
-		getMelody: (state: SequencerState) => state.melody.filter(note => note != 0),
+		getMelodyNotes: (state: SequencerState): number => state.melody.length,
+		getMelody: (state: SequencerState) => state.melody.map(note => midiNoteToString(note)),
+		getCurrentPosition: (state: SequencerState) => state.currentPosition,
+		getLowestNote: (state: SequencerState) => state.lowestNote,
+		getHighestNote: (state: SequencerState) => state.highestNote,
+		getNotes: (state: SequencerState) => state.notes,
 	},
 	actions: {
 		initMelody() {
-			this.notes = Array.from({ length: this.highestNote - this.lowestNote + 1 }, (_, i) => this.highestNote - i);
-			this.melody = Array(this.melodyLength).fill(0);
+			this.notes = Array.from({ length: this.melodyLength }).fill(0)
+			for (let i = 0; i < this.melodyLength; i++) {
+				this.notes[i] = mapToNoteRange(i, 0, this.melodyLength, this.lowestNote, this.highestNote)
+			}
 		},
-
-		changeNoteAtPosition(position:number, note:number) {
+		changeNoteAtPosition(position: number, note: number) {
 			this.melody[position] = note
 		},
 
 		resetMelody() {
 			this.currentPosition = 0	
-			this.melody = Array(this.melodyLength).fill(0);
+			this.melody = Array(this.melodyLength)
 		},
 		pushNoteToMelody(note: number) {
 			this.melody[this.melodyLength - 1] = note
+
 		},
 		toggleNoteInMelody(note: number) {
 			const index = this.melody.lastIndexOf(note)
@@ -57,15 +63,13 @@ export const useSequencerStore = defineStore('sequencerStore', {
 		addNoteToMelody(note: number) {
 			this.melody.push(note)
 		},
-		pushNextNoteToMelody(note: number) {
-			this.melody.shift()
-			this.melody.push(note)
-		},
 		setActiveTrack(asset: AudioAsset) {
 			this.resetMelody();
 			this.currentPosition = 0;
-		    const mappedMelody = asset.melody.map(note => mapToNoteRange(note, 21, 60, this.lowestNote, this.highestNote))
-			this.melody = mappedMelody
+			const minMelodyValue = Math.min(...asset.melody);
+			const maxMelodyValue = Math.max(...asset.melody);
+			const mappedMelody = asset.melody.map(note => mapToNoteRange(note, minMelodyValue, maxMelodyValue, this.lowestNote, this.highestNote));
+			this.melody = mappedMelody;
 		},
 		async loadUrl(url:string) {
 			const player = 	new Tone.Player(url)
