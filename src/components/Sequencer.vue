@@ -17,7 +17,6 @@ const thisPosition = computed(()=>{
 const sequencerStore = useSequencerStore()
 </script>
 <template>
-    <div>{{ sequencerStore.melody }}</div>
     <div class="w-full overflow-y-auto h-full px-32" >
         <SequencerControls :synth="props.synth" />
         <div class="sequencer">
