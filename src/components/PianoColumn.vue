@@ -137,6 +137,13 @@ const removeKey = ()=>{
   window.removeEventListener('keydown', handleKey)
 }
 
+onBeforeUnmount(()=>{
+  removeKey()
+})
+
+onMounted(()=>{
+  addKey()
+})
 
 </script>
 
