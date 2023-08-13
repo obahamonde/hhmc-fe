@@ -1,0 +1,4 @@
+<template>
+    <Piano />
+    <Explorer/>
+</template>
