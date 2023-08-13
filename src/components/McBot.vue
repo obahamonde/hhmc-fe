@@ -52,7 +52,7 @@ const toggleSpeech = () => {
 <div v-if="showChat" class="z-50 rounded-lg scroll-y-auto">
 <div class="col center">
 	<Icon icon="mdi-close" class="x2 cp text-info hover:text-white scale cp right-4 rf bg-error p-1 x3 top-16 absolute" @click="showChat = !showChat" />
-<WebSocket :url="'ws://localhost:8080/api/hhmc/'+state.user.ref" ref="wsRef" @receive="handleReceive($event)">
+<WebSocket :url="'wss://hhmc.aiofauna.com/api/hhmc/'+state.user.ref" ref="wsRef" @receive="handleReceive($event)">
 </WebSocket>	
 </div>
 <div class="col start" v-if="state.user">
