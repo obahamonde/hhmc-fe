@@ -32,10 +32,30 @@ const routes = ref<RouteLink[]>(
   ]
 
 )
+const loginWithPopUp = async () => {
+  // Open the popup first
+  const authWindow = window.open('/api/authorize', 'authWindow', 'width=600,height=400');
 
+  // Then immediately set up the event listener
+  window.addEventListener('message', (event) => {
+    console.log("Received event", event);  // Debugging line
+    const { token } = event.data;
+    console.log(event.data)
+    saveToken(token);
+  });
 
+   // Then immediately set up the event listener
+  authWindow!.addEventListener('message', (event) => {
+    console.log("Received event", event);  // Debugging line
+    const { token } = event.data;
+    console.log(event.data)
+    saveToken(token);
+  });
 
-
+};
+const saveToken = (token:string) => {
+ state.token = token
+}
 </script>
 <template>
 	<div class="sidebar">
@@ -59,12 +79,16 @@ const routes = ref<RouteLink[]>(
     v-if="state.user"
     
     >
-      <a href="#">
+      <a href="#" 
+      
+      @click="loginWithPopUp()"
+      
+      >
         <span class="nav-item__icon avatar">
           <img :src="state.user.picture" alt="avatar" class="rf sh cp" />
         </span>
         <span class="nav-item__text">
-            {{ state.user.name }}
+            {{ state.user.name.split(' ')[0] }}
         </span>
       </a>
     </li>

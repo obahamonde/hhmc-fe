@@ -16,12 +16,10 @@ const determinePianoKey = (note:number)=>{
 const position = ref(0)
 
 const selectNote = (note: number) => {
-  // If clicking the same note, deselect it instead
   if (note === sequencerStore.getNoteAtPosition(position.value)) {
     sequencerStore.changeNoteAtPosition(position.value, 0)
     position.value++
   } else {
-    // play note
     props.synth.triggerAttackRelease(midiNoteToString(note), "8n");
     sequencerStore.changeNoteAtPosition(position.value, note)
     position.value++

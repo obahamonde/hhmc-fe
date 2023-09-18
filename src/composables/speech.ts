@@ -7,6 +7,7 @@ export const useSpeech = () => {
 	const speechRecognitionList = new SpeechGrammarList();
 	speechRecognitionList.addFromString(1);
 	speech.recognition!.grammars = speechRecognitionList;
+	speech.recognition!.lang = "es-MX";
 	const { isListening, result } = speech;
 
 	return {

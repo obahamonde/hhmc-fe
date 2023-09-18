@@ -7,6 +7,7 @@ export const useStore = defineStore("state", () => {
     user: null as User | null,
     messages: [] as Message[],
     namespace: "default" as string | null,
+    token: null as string | null,
 
   });
 

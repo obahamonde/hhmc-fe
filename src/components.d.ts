@@ -9,9 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Auth: typeof import('./components/Auth.vue')['default']
     Dark: typeof import('./components/Dark.vue')['default']
-    Drums: typeof import('./components/Drums.vue')['default']
     Explorer: typeof import('./components/Explorer.vue')['default']
-    Library: typeof import('./components/Library.vue')['default']
     McBot: typeof import('./components/McBot.vue')['default']
     Modal: typeof import('./components/Modal.vue')['default']
     NavBar: typeof import('./components/NavBar.vue')['default']

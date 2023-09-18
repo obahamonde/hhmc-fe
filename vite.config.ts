@@ -23,17 +23,11 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:4200/api",
+        target: "https://hhmc.aiofauna.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
         ws: true,
-      },
-      "/static": {
-        target: "http://localhost:4200/static",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/static/, ""),
-        ws: true,
-      },
+      }
     },
 
   },
