@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const title = ref("Hip Hop Movimiento Cultural")
 const thisTitle = ref("")
+const route = useRoute()
+const token = ref("")
+watchEffect(() => {
+  token.value = route.query.token as string
+})
 const typewrite = () => {
   for (let i = 0; i < title.value.length; i++) {
     setTimeout(() => {
@@ -21,7 +26,7 @@ const router = useRouter()
     <img src="/favicon.svg" class="x16 rf sh top-4 fixed sh-lg" />
     <button class="btn-get bottom-16 absolute " @click="router.push('/studio')">HHMC Studio</button>
   </div>
-  
+  <h1>{{ token }}</h1>
 </template>
 
 <style scoped lang="scss">

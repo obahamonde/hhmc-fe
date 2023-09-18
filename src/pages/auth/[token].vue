@@ -7,5 +7,5 @@ const props = defineProps({
 })
 </script>
 <template>
-<div>{{ token }}</div>
+<div>{{ props.token }}</div>
 </template>
