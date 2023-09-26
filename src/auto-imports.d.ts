@@ -46,6 +46,7 @@ declare global {
   const isRef: typeof import('vue')['isRef']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
+  const midiNoteToFrequency: typeof import('./stores/sequencerStore')['midiNoteToFrequency']
   const midiNoteToString: typeof import('./stores/pianoStore')['midiNoteToString']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
